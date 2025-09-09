@@ -1,0 +1,15 @@
+:root{
+  --brand: #6f42c1;          /* roxo elegante */
+  --brand-contrast: #ffffff;
+}
+
+/* Ajustes finos sobre o Bootstrap */
+.btn-primary {
+  background-color: var(--brand);
+  border-color: var(--brand);
+}
+.btn-primary:hover { filter: brightness(0.92); }
+
+.navbar-brand { letter-spacing: .3px; }
+
+.card { border: 1px solid rgba(0,0,0,.06); }

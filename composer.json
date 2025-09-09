@@ -1,0 +1,17 @@
+{
+    "name": "pichau/projeto-duo",
+    "autoload": {
+        "psr-4": {
+            "Pichau\\ProjetoDuo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrei Costa",
+            "email": "116109336+AndrCos@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
