@@ -1,55 +1,48 @@
 <?php
+session_start();
 
-require_once __DIR__ . '/../vendor/autoload.php';
+// Carregar os controllers
+require __DIR__ . '/../app/controllers/HomeController.php';
+require __DIR__ . '/../app/controllers/TarefaController.php';
+require __DIR__ . '/../app/controllers/UsuarioController.php';
 
-// dir dos controladores
-define('CONTROLLER_PATH', __DIR__ . '/../app/controllers/');
+// Captura a URL (ex: index.php?url=tarefas/nova)
+$url = $_GET['url'] ?? '';
+$parts = explode('/', trim($url, '/'));
 
-// puxa url
-$url = $_GET['url'] ?? 'home'; // Define 'home' como padrão se a URL não for informada
+// Definir controlador e ação
+$controller = $parts[0] ?: 'home';
+$action = $parts[1] ?? 'index';
 
-// root
-switch ($url) {
-    case 'home':
-        require_once CONTROLLER_PATH . 'HomeController.php';
-        $controller = new HomeController();
-        $controller->index();
-        break;
-
+// Roteamento simples
+switch ($controller) {
     case 'tarefas':
-        require_once CONTROLLER_PATH . 'TarefaController.php';
-        $controller = new TarefaController();
-        $controller->index();
+        $ctrl = new TarefaController();
+        if ($action === 'nova') {
+            $ctrl->nova();
+        } elseif ($action === 'salvar') {
+            $ctrl->salvar();
+        } elseif ($action === 'editar') {
+            $id = $parts[2] ?? null;
+            $ctrl->editar($id);
+        } elseif ($action === 'atualizar') {
+            $ctrl->atualizar();
+        } elseif ($action === 'excluir') {
+            $id = $parts[2] ?? null;
+            $ctrl->excluir($id);
+        } else {
+            $ctrl->index(); // listar tarefas
+        }
         break;
 
-    case 'tarefas/criar':
-        require_once CONTROLLER_PATH . 'TarefaController.php';
-        $controller = new TarefaController();
-        $controller->criar();
-        break;
-        
-    case 'tarefas/editar':
-        require_once CONTROLLER_PATH . 'TarefaController.php';
-        $controller = new TarefaController();
-        $controller->editar();
+    case 'usuarios':
+        $ctrl = new UsuarioController();
+        $ctrl->index();
         break;
 
-    case 'tarefas/excluir':
-        require_once CONTROLLER_PATH . 'TarefaController.php';
-        $controller = new TarefaController();
-        $controller->excluir();
-        break;
-        
-    case 'usuario':
-        require_once CONTROLLER_PATH . 'UsuarioController.php';
-        $controller = new UsuarioController();
-        $controller->index();
-        break;
-
+    case 'home':
     default:
-        http_response_code(404);
-        require_once CONTROLLER_PATH . 'ErroController.php';
-        $controller = new ErroController();
-        $controller->notFound();
+        $ctrl = new HomeController();
+        $ctrl->index();
         break;
 }

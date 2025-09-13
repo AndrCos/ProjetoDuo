@@ -1,4 +1,3 @@
-<!-- views/layout.php -->
 <?php
   // Ajuste a URL base conforme seu ambiente
   $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
@@ -24,15 +23,15 @@
 
   <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="<?= $base ?>/">ProjetoDuo</a>
+      <a class="navbar-brand fw-bold" href="<?= $base ?>/index.php">ProjetoDuo</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="nav" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/tarefas">Tarefas</a></li>
-          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/tarefas/nova">Nova Tarefa</a></li>
-          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/usuarios">Usuários</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/index.php?url=tarefas">Tarefas</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/index.php?url=tarefas/nova">Nova Tarefa</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/index.php?url=usuarios">Usuários</a></li>
         </ul>
       </div>
     </div>
@@ -59,7 +58,7 @@
   <footer class="border-top py-4 mt-5 bg-white">
     <div class="container small text-muted d-flex justify-content-between">
       <span>© <?= date('Y') ?> Projeto Duo</span>
-      <span><a class="link-secondary" href="<?= $base ?>/sobre">Sobre</a></span>
+      <span><a class="link-secondary" href="<?= $base ?>/index.php?url=sobre">Sobre</a></span>
     </div>
   </footer>
 
@@ -69,3 +68,4 @@
   <script src="<?= $base ?>/assets/js/app.js"></script>
 </body>
 </html>
+

@@ -1,0 +1,12 @@
+# public/.htaccess
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /ProjetoDuo/public/
+
+# Se for arquivo ou pasta real, não redireciona
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Tudo vai para index.php
+RewriteRule ^ index.php [L]
