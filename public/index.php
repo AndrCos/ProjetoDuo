@@ -1,20 +1,19 @@
 <?php
+
 session_start();
 
-// Carregar os controllers
-require __DIR__ . '/../app/controllers/HomeController.php';
-require __DIR__ . '/../app/controllers/TarefaController.php';
-require __DIR__ . '/../app/controllers/UsuarioController.php';
+require 'C:/xampp/htdocs/ProjetoDuo/src/vendor/autoload.php';
 
-// Captura a URL (ex: index.php?url=tarefas/nova)
+use ProjetoDuo\controllers\HomeController;
+use ProjetoDuo\controllers\TarefaController;
+use ProjetoDuo\controllers\UsuarioController;
+
 $url = $_GET['url'] ?? '';
 $parts = explode('/', trim($url, '/'));
 
-// Definir controlador e ação
 $controller = $parts[0] ?: 'home';
 $action = $parts[1] ?? 'index';
 
-// Roteamento simples
 switch ($controller) {
     case 'tarefas':
         $ctrl = new TarefaController();
@@ -31,7 +30,7 @@ switch ($controller) {
             $id = $parts[2] ?? null;
             $ctrl->excluir($id);
         } else {
-            $ctrl->index(); // listar tarefas
+            $ctrl->index();
         }
         break;
 

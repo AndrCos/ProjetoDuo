@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '/../models/TarefaModel.php';
-require_once __DIR__ . '/../models/CategoriaModel.php';
+
+use ProjetoDuo\controllers\BaseController;
+use ProjetoDuo\models\TarefaModel;
+use ProjetoDuo\models\CategoriaModel;
 
 class TarefaController extends BaseController {
     private $tarefaModel;

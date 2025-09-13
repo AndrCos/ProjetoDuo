@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/BaseController.php';
+
+use ProjetoDuo\controllers\BaseController;
 
 class UsuarioController extends BaseController {
     public function index() {
         $this->render('usuarios', [
-            'title' => 'Usuários',
+            'title' => 'Usuários'
         ]);
     }
 }
