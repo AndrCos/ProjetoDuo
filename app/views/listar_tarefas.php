@@ -1,34 +1,36 @@
-<!-- views/listar_tarefas.php -->
-<section class="d-flex align-items-center justify-content-between mb-3">
-  <h1 class="h3 m-0">Minhas Tarefas</h1>
-  <a href="<?= $base ?>/tarefas/nova" class="btn btn-primary">+ Nova tarefa</a>
-</section>
+<?php require_once 'header.php'; ?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Lista de Tarefas</h1>
+    <a href="?url=tarefas/criar" class="btn btn-primary">Adicionar Nova Tarefa</a>
+</div>
+<hr>
 
 <?php if (empty($tarefas)): ?>
-  <div class="text-center py-5 text-muted">
-    <p>Nenhuma tarefa por aqui ainda.</p>
-  </div>
+    <div class="alert alert-info" role="alert">
+        Nenhuma tarefa encontrada.
+    </div>
 <?php else: ?>
-  <div class="row g-3">
-    <?php foreach ($tarefas as $t): ?>
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h2 class="h5 card-title mb-1"><?= htmlspecialchars($t['titulo']) ?></h2>
-            <p class="card-text text-muted small mb-2">
-              Categoria: <?= htmlspecialchars($t['categoria_nome'] ?? '—') ?>
-            </p>
-            <p class="card-text"><?= nl2br(htmlspecialchars($t['descricao'])) ?></p>
-          </div>
-          <div class="card-footer bg-white d-flex gap-2">
-            <a class="btn btn-outline-secondary btn-sm"
-               href="<?= $base ?>/tarefas/editar/<?= (int)$t['id'] ?>">Editar</a>
-            <a class="btn btn-outline-danger btn-sm"
-               href="<?= $base ?>/tarefas/excluir/<?= (int)$t['id'] ?>"
-               onclick="return confirm('Excluir esta tarefa?')">Excluir</a>
-          </div>
-        </div>
-      </div>
-    <?php endforeach; ?>
-  </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <?php foreach ($tarefas as $tarefa): ?>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= htmlspecialchars($tarefa['titulo']) ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($tarefa['categoria_nome']) ?></h6>
+                        <p class="card-text"><?= htmlspecialchars($tarefa['descricao']) ?></p>
+                        <span class="badge bg-secondary"><?= htmlspecialchars($tarefa['status']) ?></span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="?url=tarefas/editar&id=<?= htmlspecialchars($tarefa['id']) ?>" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="?url=tarefas/excluir&id=<?= htmlspecialchars($tarefa['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>
+
+</div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -2,8 +2,7 @@
     "name": "pichau/projeto-duo",
     "autoload": {
         "psr-4": {
-            "Pichau\\ProjetoDuo\\": "src/",
-            "ProjetoDuo\\": "app/"
+            "Pichau\\ProjetoDuo\\": "src/"
         }
     },
     "authors": [
