@@ -1,11 +1,8 @@
 <?php
 
-use ProjetoDuo\controllers\BaseController;
-
-class HomeController extends BaseController {
+class HomeController {
     public function index() {
-        $this->render('home', [
-            'title' => 'Página Inicial'
-        ]);
+        echo "<h1>Bem-vindo ao Gerenciador de Tarefas!</h1>";
+        echo "<p>Esta é a página inicial da sua aplicação.</p>";
     }
 }

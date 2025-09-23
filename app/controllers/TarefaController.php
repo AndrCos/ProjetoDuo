@@ -1,10 +1,9 @@
 <?php
 
-use ProjetoDuo\controllers\BaseController;
-use ProjetoDuo\models\TarefaModel;
-use ProjetoDuo\models\CategoriaModel;
+require_once __DIR__ . '/../models/TarefaModel.php';
+require_once __DIR__ . '/../models/CategoriaModel.php';
 
-class TarefaController extends BaseController {
+class TarefaController {
     private $tarefaModel;
     private $categoriaModel;
 
@@ -13,31 +12,28 @@ class TarefaController extends BaseController {
         $this->categoriaModel = new CategoriaModel();
     }
 
-  public function index()
-{
-    $tarefas = $this->tarefaModel->listarComCategoria(); // ajuste ao seu model
-    $this->render('listar_tarefas', [
-        'title'   => 'Minhas Tarefas',
-        'tarefas' => $tarefas
-    ]);
-}
+    public function index() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: ?url=login');
+            exit;
+        }
 
-public function nova()
-{
-    $categorias = $this->categoriaModel->todas();
-    $this->render('nova_tarefa', [
-        'title'      => 'Nova Tarefa',
-        'categorias' => $categorias
-    ]);
-}
-
+        $id_usuario = $_SESSION['usuario_id'];
+        $tarefas = $this->tarefaModel->listarTarefas($id_usuario);
+        require_once __DIR__ . '/../views/listar_tarefas.php';
+    }
 
     public function criar() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: ?url=login');
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $titulo = $_POST['titulo'];
             $descricao = $_POST['descricao'];
             $id_categoria = $_POST['categoria'];
-            $id_usuario = 1;
+            $id_usuario = $_SESSION['usuario_id'];
 
             if ($this->tarefaModel->salvarTarefa($titulo, $descricao, $id_usuario, $id_categoria)) {
                 header('Location: ?url=tarefas');
@@ -47,15 +43,18 @@ public function nova()
             }
         } else {
             $categorias = $this->categoriaModel->listarCategorias();
-            $this->render('nova_tarefa', [
-                'title'      => 'Nova Tarefa',
-                'categorias' => $categorias
-            ]);
+            require_once __DIR__ . '/../views/nova_tarefa.php';
         }
     }
 
     public function editar() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: ?url=login');
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // atualiza a tarefa no banco
             $id = $_POST['id'];
             $titulo = $_POST['titulo'];
             $descricao = $_POST['descricao'];
@@ -69,16 +68,13 @@ public function nova()
                 echo "Erro ao atualizar a tarefa.";
             }
         } else {
+            // forms de edição
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
                 $tarefa = $this->tarefaModel->buscarTarefaPorId($id);
                 if ($tarefa) {
                     $categorias = $this->categoriaModel->listarCategorias();
-                    $this->render('editar_tarefa', [
-                        'title'      => 'Editar Tarefa',
-                        'tarefa'     => $tarefa,
-                        'categorias' => $categorias
-                    ]);
+                    require_once __DIR__ . '/../views/editar_tarefa.php';
                 } else {
                     echo "Tarefa não encontrada.";
                 }
@@ -90,6 +86,11 @@ public function nova()
     }
     
     public function excluir() {
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: ?url=login');
+            exit;
+        }
+
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             if ($this->tarefaModel->excluirTarefa($id)) {
