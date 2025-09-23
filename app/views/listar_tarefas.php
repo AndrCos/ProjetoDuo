@@ -1,8 +1,29 @@
 <?php require_once 'header.php'; ?>
 
+<style>
+    body {
+        background-color: #e0f2f7; /* Cor de fundo azul claro */
+    }
+    .card-custom {
+        border-radius: 15px; /* Bordas arredondadas */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra para o card */
+    }
+    .btn-custom {
+        background-color: #007bff; /* Cor do botão principal */
+        border-color: #007bff;
+        color: white; /* Cor do texto do botão */
+        border-radius: 30px; /* Bordas arredondadas para o botão */
+        padding: 10px 20px;
+    }
+    .btn-custom:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Lista de Tarefas</h1>
-    <a href="?url=tarefas/criar" class="btn btn-primary">Adicionar Nova Tarefa</a>
+    <h1 class="text-primary">Lista de Tarefas</h1>
+    <a href="?url=tarefas/criar" class="btn btn-custom">Adicionar Nova Tarefa</a>
 </div>
 <hr>
 
@@ -14,7 +35,7 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <?php foreach ($tarefas as $tarefa): ?>
             <div class="col">
-                <div class="card h-100">
+                <div class="card h-100 card-custom">
                     <div class="card-body">
                         <h5 class="card-title"><?= htmlspecialchars($tarefa['titulo']) ?></h5>
                         <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($tarefa['categoria_nome']) ?></h6>
